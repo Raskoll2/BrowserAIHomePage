@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>Home</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                height: 100vh;
+                background: #111;
+                overflow-x: hidden;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                font-family:
+                    system-ui,
+                    -apple-system,
+                    sans-serif;
+            }
+
+            .blury {
+                background-image: url("data:image/jpeg;base64,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");
+                background-size: cover;
+                background-position: center;
+                filter: blur(10px);
+                width: 100%;
+                height: 100%;
+            }
+
+            .frost-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 1;
+            }
+            .frost-overlay::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
+                opacity: 0.2;
+                pointer-events: none;
+            }
+            #info-button-container {
+                max-width: 60%;
+                position: absolute;
+                border-radius: 8px;
+                top: 20px;
+                right: 20px;
+                margin-left: 50%;
+                z-index: 2;
+            }
+
+            #kobold {
+                border-radius: 8px;
+                background: #48484870;
+                padding: 1em;
+                padding-top: 0.3em;
+                max-width: 60vw;
+                right: 20px;
+            }
+
+            .relative {
+                max-width: 64vw;
+                padding: 0;
+            }
+
+            #chat-container {
+                position: absolute;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 90%;
+                max-width: 600px;
+                z-index: 2;
+            }
+
+            .message {
+                padding: 10px 15px;
+                margin: 5px 0;
+                border-radius: 15px;
+                max-width: 80%;
+                word-wrap: break-word;
+            }
+
+            .message.user {
+                background: rgba(165, 165, 165, 0.7);
+                color: white;
+                margin-left: auto;
+            }
+
+            .message.assistant {
+                background: rgba(150, 150, 150, 0.2);
+                color: white;
+                margin-right: auto;
+            }
+
+            .message.assistant pre {
+                background: rgba(0, 0, 0, 0.1);
+                padding: 10px;
+                border-radius: 5px;
+                overflow-x: auto;
+            }
+
+            .message.assistant code {
+                background: rgba(0, 0, 0, 0.1);
+                padding: 2px 5px;
+                border-radius: 3px;
+            }
+
+            img {
+                max-width: 85vw;
+            }
+
+            .chat-input {
+                display: flex;
+                gap: 10px;
+                margin-top: 20px;
+            }
+
+            .chat-input input {
+                flex: 1;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 20px;
+                background: rgba(255, 255, 255, 0.1);
+                color: white;
+                font-size: 16px;
+                min-width: 100px;
+            }
+
+            .chat-input input:focus {
+                outline: none;
+                background: rgba(255, 255, 255, 0.2);
+            }
+
+            .chat-input button {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 20px;
+                background: rgba(150, 150, 150, 0.8);
+                color: white;
+                cursor: pointer;
+                transition: background 0.3s ease;
+            }
+
+            .chat-input button:hover {
+                background: rgba(150, 150, 150, 0.5);
+            }
+
+            .messages-container {
+                max-height: 35vh;
+                overflow-y: auto;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                position: relative;
+            }
+
+            .search-container {
+                margin-top: -5vh;
+                z-index: 2;
+                position: absolute;
+            }
+            .search-container input[type="text"] {
+                max-width: 600px;
+                width: 80vw;
+                padding: 10px;
+                margin: 10px 0;
+                border: None;
+                border-radius: 55px;
+                box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
+                font-size: 16px;
+                background-color: #f8f8f810;
+                color: #fff;
+            }
+
+            .search-container input[type="text"]:focus {
+                outline: none;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            }
+
+            .time {
+                position: absolute;
+                top: 25vh;
+                font-size: 7em;
+                //font-weight: bold;
+                color: #e8e8e8;
+            }
+
+            .weather-button {
+                background-color: rgba(30, 30, 30, 0.4);
+                color: white;
+                text-decoration: none;
+                border-radius: 8px;
+                padding: 20px 30px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                justify-content: center;
+                z-index: 4;
+                top: 20px;
+                left: 20px;
+                position: absolute;
+            }
+            .weather-button h3 {
+                font-size: 1.2rem;
+                font-weight: 600;
+                margin: 0;
+                padding-bottom: 10px;
+            }
+            .weather-button .weather-info {
+                font-size: 0.875rem;
+                color: #d1d5db;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="blury"></div>
+        <div class="frost-overlay"></div>
+        <div
+            id="weather-box"
+            class="relative"
+            style="display: flex; justify-content: flex-end"
+        >
+            <a
+                href="https://www.google.com/search?q=weather&client=firefox-b-d&sca_esv=4f9cd8e0fdf28683&sxsrf=ADLYWILcvKlkxJrdS8VKfR9yJ5vOT_93FQ%3A1732096401059&ei=kbE9Z-CZA5OQ4-EPk6SI2Qc&ved=0ahUKEwigps710eqJAxUTyDgGHRMSInsQ4dUDCA8&uact=5&oq=weather"
+            >
+                <div id="weather-link" class="weather-button">
+                    <div id="weather">
+                        <div
+                            style="display: flex; align-items: center; gap: 8px"
+                        >
+                            <h3>Weather</h3>
+                        </div>
+                        <div
+                            class="weather-info"
+                            style="
+                                display: flex;
+                                align-items: center;
+                                gap: 16px;
+                            "
+                        >
+                            <span id="weather-emoji" style="font-size: 1.5em"
+                                >Loading...</span
+                            >
+                            <span id="max-temp">Max: Loading...</span>
+                            <span id="min-temp">Min: Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div id="info-button-container"></div>
+        <div id="time" class="time">00:00</div>
+        <div class="search-container">
+            <form action="https://www.google.com/search" method="get">
+                <input
+                    type="text"
+                    name="q"
+                    id="searchBox"
+                    placeholder="Search Google or type a URL"
+                    autocomplete="off"
+                    required
+                />
+                <br />
+            </form>
+        </div>
+        <div id="chat-container"></div>
+
+        <script type="text/babel">
+            function updateTime() {
+                const now = new Date();
+                const hours = String(now.getHours() % 12); // Ensure two digits
+                const minutes = String(now.getMinutes()).padStart(2, "0"); // Ensure two digits
+                document.getElementById("time").textContent =
+                    `${hours}:${minutes}`;
+            }
+
+            // Update time immediately when the script loads
+            updateTime();
+            //setInterval(updateTime, 1000);
+
+            window.onload = function () {
+                document.getElementById("searchBox").value = "";
+            };
+
+            const KoboldcppInfoButton = () => {
+                const [showTooltip, setShowTooltip] = React.useState(false);
+                const [releaseInfo, setReleaseInfo] = React.useState({
+                    version: "Loading...",
+                    notes: "Loading...",
+                    date: "Loading...",
+                });
+                let hoverTimer;
+
+                React.useEffect(() => {
+                    fetch(
+                        "https://api.github.com/repos/LostRuins/koboldcpp/releases/latest",
+                    )
+                        .then((response) => response.json())
+                        .then((data) => {
+                            setReleaseInfo({
+                                version: data.tag_name,
+                                notes: data.body_html || data.body,
+                                date: new Date(
+                                    data.published_at,
+                                ).toLocaleDateString(),
+                            });
+                        })
+                        .catch((error) =>
+                            console.error(
+                                "Error fetching release info:",
+                                error,
+                            ),
+                        );
+                }, []);
+
+                const handleMouseEnter = () => {
+                    hoverTimer = setTimeout(() => {
+                        setShowTooltip(true);
+                    }, 1000);
+                };
+
+                const handleMouseLeave = () => {
+                    clearTimeout(hoverTimer);
+                    setShowTooltip(false);
+                };
+
+                return (
+                    <div
+                        className="relative"
+                        style={{ display: "flex;", justifyContent: "flex-end" }}
+                    >
+                        <a
+                            href="https://github.com/LostRuins/koboldcpp/releases/latest"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                            style={{
+                                backgroundColor: "rgba(30, 30, 30, 0.4)",
+                                color: "white",
+                                textDecoration: "none",
+                                borderRadius: "8px",
+                            }}
+                        >
+                            <div id="kobold">
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        gap: "8px",
+                                    }}
+                                >
+                                    <h3
+                                        style={{
+                                            fontSize: "1.125rem",
+                                            fontWeight: "600",
+                                        }}
+                                    >
+                                        Koboldcpp
+                                    </h3>
+                                </div>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        gap: "16px",
+                                    }}
+                                >
+                                    <span
+                                        style={{
+                                            fontSize: "0.875rem",
+                                            color: "#D1D5DB",
+                                        }}
+                                    >
+                                        {releaseInfo.version}
+                                    </span>
+                                    <span
+                                        style={{
+                                            fontSize: "0.875rem",
+                                            color: "#D1D5DB",
+                                        }}
+                                    >
+                                        Updated: {releaseInfo.date}
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+
+                        {showTooltip && (
+                            <div
+                                style={{
+                                    position: "absolute",
+                                    zIndex: 10,
+                                    width: "384px",
+                                    maxWidth: "80vw",
+                                    padding: "16px",
+                                    marginTop: "10px",
+                                    backgroundColor: "#101010d0",
+                                    border: "1px solid #777",
+                                    borderRadius: "8px",
+                                    boxShadow:
+                                        "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+                                    top: "100%",
+                                    right: 0,
+                                }}
+                            >
+                                <h4
+                                    style={{
+                                        fontSize: "1.125rem",
+                                        fontWeight: "600",
+                                        color: "white",
+                                        marginBottom: "8px",
+                                        marginTop: "0px",
+                                    }}
+                                >
+                                    Release Notes
+                                </h4>
+                                <div
+                                    style={{
+                                        fontSize: "0.875rem",
+                                        color: "#d8d8d8",
+                                        maxHeight: "300px",
+                                        overflowY: "auto",
+                                    }}
+                                    dangerouslySetInnerHTML={{
+                                        __html: releaseInfo.notes,
+                                    }}
+                                />
+                            </div>
+                        )}
+                    </div>
+                );
+            };
+
+            const Chat = () => {
+                const [messages, setMessages] = React.useState([]);
+                const [input, setInput] = React.useState("");
+                const [isLoading, setIsLoading] = React.useState(false);
+                const [images, setImages] = React.useState([]); // New state to store images
+                const messagesEndRef = React.useRef(null);
+
+                const scrollToBottom = () => {
+                    messagesEndRef.current?.scrollIntoView({
+                        behavior: "smooth",
+                    });
+                };
+
+                React.useEffect(() => {
+                    scrollToBottom();
+                }, [messages, images]);
+
+                const resetChat = () => {
+                    setMessages([]);
+                    setInput("");
+                    setIsLoading(false);
+                    setImages([]); // Reset images
+                };
+
+                const sendMessage = async () => {
+                    if (!input.trim()) return;
+
+                    if (
+                        input.trim().startsWith("/img") ||
+                        input.trim().startsWith("/image")
+                    ) {
+                        const prompt = input
+                            .trim()
+                            .replace(/^(\/img|\/image)\s*/, "");
+                        if (!prompt) {
+                            setMessages((prev) => [
+                                ...prev,
+                                {
+                                    role: "assistant",
+                                    content:
+                                        "Please provide a prompt for the image.",
+                                },
+                            ]);
+                            return;
+                        }
+                        setInput("");
+                        setIsLoading(true);
+
+                        try {
+                            const response = await fetch(
+                                "https://api.together.xyz/v1/images/generations",
+                                {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        Authorization:
+                                            "Bearer 88f230edc4234429f175c4c5dd8c409a4fc57b782a65ee385e3f34b7392c8b3c",
+                                    },
+                                    body: JSON.stringify({
+                                        model: "black-forest-labs/FLUX.1-schnell-Free",
+                                        prompt: prompt,
+                                        width: 768,
+                                        height: 768,
+                                        steps: 4,
+                                        n: 1,
+                                        response_format: "b64_json",
+                                    }),
+                                },
+                            );
+
+                            if (!response.ok) {
+                                throw new Error(
+                                    `HTTP error! status: ${response.status}`,
+                                );
+                            }
+
+                            const data = await response.json();
+                            const imageUrl = `data:image/jpeg;base64,${data.data[0].b64_json}`;
+
+                            setImages((prev) => [...prev, imageUrl]);
+                        } catch (error) {
+                            console.error("Error:", error);
+                            setMessages((prev) => [
+                                ...prev,
+                                {
+                                    role: "assistant",
+                                    content:
+                                        "Sorry, I encountered an error generating the image. Please try again.",
+                                },
+                            ]);
+                        }
+
+                        setIsLoading(false);
+                    } else {
+                        const userMessage = { role: "user", content: input };
+                        setMessages((prev) => [...prev, userMessage]);
+                        setInput("");
+                        setIsLoading(true);
+
+                        try {
+                            const response = await fetch(
+                                "https://api.mistral.ai/v1/chat/completions",
+                                {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        Authorization:
+                                            "Bearer key_here",
+                                    },
+                                    body: JSON.stringify({
+                                        model: "mistral-medium-latest",
+                                        messages: [...messages, userMessage],
+                                        stream: true,
+                                    }),
+                                },
+                            );
+
+                            if (!response.ok) {
+                                throw new Error(
+                                    `HTTP error! status: ${response.status}`,
+                                );
+                            }
+
+                            setMessages((prev) => [
+                                ...prev,
+                                {
+                                    role: "assistant",
+                                    content: "",
+                                },
+                            ]);
+
+                            const reader = response.body.getReader();
+                            const decoder = new TextDecoder();
+                            let accumulatedContent = "";
+
+                            while (true) {
+                                const { value, done } = await reader.read();
+                                if (done) break;
+
+                                const chunk = decoder.decode(value);
+                                const lines = chunk.split("\n");
+
+                                for (const line of lines) {
+                                    if (line.trim() === "") continue;
+                                    if (line.includes("[DONE]")) continue;
+
+                                    try {
+                                        const jsonString = line.replace(
+                                            /^data: /,
+                                            "",
+                                        );
+                                        const data = JSON.parse(jsonString);
+
+                                        if (
+                                            data.choices &&
+                                            data.choices[0]?.delta?.content
+                                        ) {
+                                            const newToken =
+                                                data.choices[0].delta.content;
+                                            accumulatedContent += newToken;
+
+                                            setMessages((prev) => {
+                                                const newMessages = [...prev];
+                                                newMessages[
+                                                    newMessages.length - 1
+                                                ] = {
+                                                    role: "assistant",
+                                                    content: accumulatedContent,
+                                                };
+                                                return newMessages;
+                                            });
+                                        }
+                                    } catch (e) {
+                                        console.error("Error parsing SSE:", e);
+                                    }
+                                }
+                            }
+                        } catch (error) {
+                            console.error("Error:", error);
+                            setMessages((prev) => [
+                                ...prev,
+                                {
+                                    role: "assistant",
+                                    content:
+                                        "Sorry, I encountered an error. Please try again.",
+                                },
+                            ]);
+                        }
+
+                        setIsLoading(false);
+                    }
+                };
+
+                const handleKeyPress = (e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
+                        sendMessage();
+                    }
+                };
+
+                const renderMarkdown = (content) => {
+                    const html = marked.parse(content);
+                    return { __html: html };
+                };
+
+                return (
+                    <div>
+                        <div className="messages-container">
+                            {/* Render chat messages */}
+                            {messages.map((message, index) => (
+                                <div
+                                    key={index}
+                                    className={`message ${message.role}`}
+                                >
+                                    {message.role === "assistant" ? (
+                                        <div
+                                            dangerouslySetInnerHTML={renderMarkdown(
+                                                message.content,
+                                            )}
+                                        />
+                                    ) : (
+                                        message.content
+                                    )}
+                                </div>
+                            ))}
+                            {/* Render images */}
+                            {images.map((image, index) => (
+                                <div key={index} className="image-container">
+                                    <img
+                                        src={image}
+                                        alt={`Generated ${index}`}
+                                        style={{
+                                            width: "350px",
+                                            height: "350px",
+                                            alignItems: "center",
+                                        }}
+                                    />
+                                </div>
+                            ))}
+                            <div ref={messagesEndRef} />
+                        </div>
+                        <div className="chat-input">
+                            <input
+                                type="text"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                onKeyPress={handleKeyPress}
+                                placeholder="Type a message..."
+                                disabled={isLoading}
+                            />
+                            <button onClick={sendMessage} disabled={isLoading}>
+                                {isLoading ? "..." : "Send"}
+                            </button>
+                            <button
+                                onClick={resetChat}
+                                disabled={isLoading}
+                                className="ml-2"
+                            >
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                );
+            };
+
+            const weatherLUT = {
+                0: "☀️", // Clear sky
+                1: "🌤️", // Mainly clear
+                2: "⛅", // Partly cloudy
+                3: "☁️", // Overcast
+                45: "🌫️", // Fog
+                48: "雱 rime fog?", // Depositing rime fog
+                51: "Light 🌧️", // Light drizzle
+                53: "🌧️", // Moderate drizzle
+                55: "Dense 🌧️", // Dense drizzle
+                56: "❄️🌨️", // Light freezing drizzle
+                57: "❄️🌨️", // Dense freezing drizzle
+                61: "Slight 🌧️", // Slight rain
+                63: "🌧️", // Moderate rain
+                65: "Heavy 🌧️", // Heavy rain
+                66: "❄️🌨️", // Light freezing rain
+                67: "❄️🌨️", // Heavy freezing rain
+                71: "❄️", // Slight snow
+                73: "❄️❄️", // Moderate snow
+                75: "❄️❄️❄️", // Heavy snow
+                77: "❄️", // Snow grains
+                80: "Light 🌧️", // Slight showers
+                81: "🌧️", // Moderate showers
+                82: "Violent 🌧️", // Violent showers
+                85: "❄️", // Slight snow showers
+                86: "❄️❄️", // Heavy snow showers
+                95: "⛈️", // Thunderstorm
+                96: "⛈️ hail", // Thunderstorm with slight hail
+                99: "⛈️ HAIL", // Thunderstorm with heavy hail
+            };
+
+            const weatherLink = document.getElementById("weather-link");
+            const maxTemp = document.getElementById("max-temp");
+            const minTemp = document.getElementById("min-temp");
+            const weatherEmoji = document.getElementById("weather-emoji");
+
+            const defaultLatitude = -27.4679;
+            const defaultLongitude = 153.0281;
+            
+            const getWeatherData = (latitude, longitude) => {
+                const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=1`;
+            
+                fetch(apiUrl)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const dailyData = data.daily;
+                        const maxTemperature = dailyData.temperature_2m_max[0];
+                        const minTemperature = dailyData.temperature_2m_min[0];
+                        const wmoCode = dailyData.weather_code[0];
+                        const emoji = weatherLUT[wmoCode] || "❓"; // Default to "❓" if code is not found
+            
+                        // Update the button text with the fetched weather data
+                        maxTemp.textContent = `Max: ${maxTemperature}°C`;
+                        minTemp.textContent = `Min: ${minTemperature}°C`;
+                        weatherEmoji.textContent = `${emoji}`;
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching weather data:", error);
+                        maxTemp.textContent = "Max Temp: Error";
+                        minTemp.textContent = "Min Temp: Error";
+                        weatherEmoji.textContent = "Weather: Error";
+                    });
+            };
+            
+            // Try to get the user's current location
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const userLatitude = position.coords.latitude;
+                    const userLongitude = position.coords.longitude;
+                    getWeatherData(userLatitude, userLongitude);
+                },
+                (error) => {
+                    console.warn("Could not get user location, using default:", error.message);
+                    getWeatherData(defaultLatitude, defaultLongitude);
+                }
+            );
+
+            // render stuff
+            ReactDOM.render(
+                <KoboldcppInfoButton />,
+                document.getElementById("info-button-container"),
+            );
+            ReactDOM.render(
+                <Chat />,
+                document.getElementById("chat-container"),
+            );
+        </script>
+    </body>
+</html>
